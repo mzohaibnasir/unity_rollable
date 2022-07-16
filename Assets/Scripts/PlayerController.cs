@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
         winTextObject.SetActive(false);
     }
 
-    void onMove(InputValue movementValue){
+    void OnMove(InputValue movementValue){
         Vector2 movementVector = movementValue.Get<Vector2>();
         movementX=movementVector.x;
         movementY=movementVector.y;
