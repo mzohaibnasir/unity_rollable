@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce=10.0f;
     public TextMeshProUGUI countText;
     private bool isGrounded;
+    private Color boxColor,greenColor,blueColor,redColor;
 
     // public 
 
@@ -18,6 +19,9 @@ public class PlayerController : MonoBehaviour
     //as we are only enabling-deabling this text
     public GameObject winTextObject;
     private int count;
+    private int redBoxCount;
+    private int greenBoxCount;
+    private int blueBoxCount;
     private Rigidbody rb;
     private float movementX;
     private float movementY;
@@ -33,6 +37,9 @@ public class PlayerController : MonoBehaviour
     {
         rb=GetComponent<Rigidbody>();
         count=0;
+        redBoxCount=0;
+        greenBoxCount=0;
+        blueBoxCount=0;
         SetCountText();
         winTextObject.SetActive(false);
     }
@@ -41,14 +48,14 @@ public class PlayerController : MonoBehaviour
         Vector2 movementVector = movementValue.Get<Vector2>();
         movementX=movementVector.x;
         movementY=movementVector.y;
-        Debug.Log("onMove()");
+        // Debug.Log("onMove()");
 
     }
     void OnJump(){ //onAction
         if (isGrounded)
         {
             rb.AddForce(new Vector3(0f, 10.0f, 0f),ForceMode.Impulse);
-            Debug.Log("Jumped");
+            // Debug.Log("Jumped");
             isGrounded=false;   
         }
     }
@@ -56,11 +63,11 @@ public class PlayerController : MonoBehaviour
 
 
     void SetCountText(){
-        countText.text= "Count: " + count.ToString();
-        if (count>=2)
+        countText.text= "Red:" + redBoxCount.ToString() + "-Blue:" + blueBoxCount.ToString() + "-Green:" + greenBoxCount.ToString();
+        if (greenBoxCount>=1 && redBoxCount>=2 && blueBoxCount>=1  )
         {
-                          winTextObject.SetActive(true);
-      
+            winTextObject.SetActive(true);
+    
         }
     }
 
@@ -75,8 +82,27 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter(Collider other){
         if (other.gameObject.CompareTag("pickUp"))
         {
+            
             other.gameObject.SetActive(false);//disabling object
-            count=count+1;
+            boxColor = other.gameObject.GetComponent<Renderer>().material.color;
+            // boxColor= new Color(1.0f, 0.0f, 0.0f, 1.0f);
+            redColor= new Color(1.0f, 0.0f, 0.0f, 1.0f);
+            greenColor= new Color(0.0f, 1.0f, 0.0f, 1.0f);
+            blueColor= new Color(0.0f, 0.0f, 1.0f, 1.0f);
+
+            if(boxColor.r==1.0f){
+                // Debug.Log("Red");
+                redBoxCount++;
+            }
+            if(boxColor.b==1.0f){
+                // Debug.Log("Blue");
+                blueBoxCount++;
+            }
+            if(boxColor.g==1.0f){
+                // Debug.Log("Green");
+                greenBoxCount++;
+            }
+            // count=count+1;
             SetCountText();
 
         }
