@@ -10,7 +10,10 @@ public class PlayerController : MonoBehaviour
     public float jumpForce=10.0f;
     public TextMeshProUGUI countText;
     private bool isGrounded;
-    private Color boxColor,greenColor,blueColor,redColor;
+    private Color boxColor,ballColor;
+    private Color redColor= new Color(1.0f, 0.0f, 0.0f, 1.0f);
+    private Color greenColor= new Color(0.0f, 1.0f, 0.0f, 1.0f);
+    private Color blueColor= new Color(0.0f, 0.0f, 1.0f, 1.0f);
 
     // public 
 
@@ -84,11 +87,10 @@ public class PlayerController : MonoBehaviour
         {
             
             other.gameObject.SetActive(false);//disabling object
+            ballColor = gameObject.GetComponent<Renderer>().material.color;
             boxColor = other.gameObject.GetComponent<Renderer>().material.color;
             // boxColor= new Color(1.0f, 0.0f, 0.0f, 1.0f);
-            redColor= new Color(1.0f, 0.0f, 0.0f, 1.0f);
-            greenColor= new Color(0.0f, 1.0f, 0.0f, 1.0f);
-            blueColor= new Color(0.0f, 0.0f, 1.0f, 1.0f);
+            
 
             if(boxColor.r==1.0f){
                 // Debug.Log("Red");
@@ -102,8 +104,11 @@ public class PlayerController : MonoBehaviour
                 // Debug.Log("Green");
                 greenBoxCount++;
             }
+            
+            gameObject.GetComponent<Renderer>().material.color = ballColor + boxColor;
             // count=count+1;
             SetCountText();
+
 
         }
     }
