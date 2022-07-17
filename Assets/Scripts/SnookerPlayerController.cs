@@ -124,11 +124,11 @@ public class SnookerPlayerController : MonoBehaviour
         Rigidbody otherRigidbody = other.gameObject.GetComponent<Rigidbody>();
         // other.gameObject.GetComponent<Rigidbody>().AddForce(40, 40, 41);
         if(otherRigidbody){
-            Debug.Log("Collision");
+            // Debug.Log("Collision");
             Vector3 forceDirection = other.gameObject.transform.position - transform.position;
             forceDirection.y=0;
             // otherRigidbody.AddForce(forceDirection * 10.0f, ForceMode.Acceleration);
-            otherRigidbody.AddForce(forceDirection * 5.0f, ForceMode.Impulse);
+            otherRigidbody.AddForce(forceDirection * 8.0f, ForceMode.Impulse);
             // otherRigidbody.AddForce(forceDirection * 5.0f, ForceMode.Force);
 
          }
